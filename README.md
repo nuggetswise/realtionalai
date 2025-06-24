@@ -61,9 +61,28 @@ This demo app showcases:
    pip install -r requirements.txt
    ```
 
-3. **Set up OpenAI API key**
-   - Get your API key from [OpenAI Platform](https://platform.openai.com/)
-   - Add it in the app sidebar when running
+3. **Configure API Key (Secure)**
+   
+   **For Production (Streamlit Cloud):**
+   - Go to your Streamlit Cloud dashboard
+   - Navigate to "Settings" → "Secrets"
+   - Add your API key in JSON format:
+     ```json
+     {
+       "openai_api_key": "your-api-key-here"
+     }
+     ```
+   
+   **For Local Development:**
+   - Option 1: Environment variable
+     ```bash
+     export OPENAI_API_KEY="your-api-key-here"
+     ```
+   - Option 2: Streamlit secrets file
+     ```bash
+     cp .streamlit/secrets.toml.example .streamlit/secrets.toml
+     # Edit .streamlit/secrets.toml and add your API key
+     ```
 
 4. **Run the application**
    ```bash
@@ -87,6 +106,9 @@ graphops_playground/
 ├── start.sh                        # Quick start script
 ├── demo.py                         # Demo mode without API
 ├── .github/workflows/              # CI/CD deployment
+├── .streamlit/                     # Streamlit configuration
+│   ├── config.toml                # App configuration
+│   └── secrets.toml.example       # Example secrets file
 └── components/                     # Modular components
     ├── __init__.py
     ├── schema_builder.py          # Graph schema definition & visualization
@@ -99,7 +121,7 @@ graphops_playground/
 
 ### Getting Started
 
-1. **Configure API Key**: Add your OpenAI API key in the sidebar
+1. **Configure API Key**: Add your OpenAI API key using secure methods above
 2. **Build Schema**: Use the Schema Builder tab to define your graph structure
 3. **Execute Queries**: Run natural language queries in the Query Executor
 4. **Generate Insights**: Use the Semantic Inference Engine for AI analysis
@@ -150,6 +172,7 @@ graphops_playground/
 - **Session State Management**: Persistent data across tabs
 - **Error Handling**: Graceful degradation when API unavailable
 - **Responsive UI**: Clean, professional interface
+- **Secure API Handling**: Uses Streamlit secrets for production
 
 ## 🚀 Deployment
 
@@ -158,6 +181,7 @@ The app is automatically deployed to Streamlit Cloud via GitHub Actions:
 - **Live URL**: [https://graphops-playground.streamlit.app](https://graphops-playground.streamlit.app)
 - **Auto-deploy**: Pushes to main branch trigger deployment
 - **CI/CD**: Automated testing and deployment pipeline
+- **Secure Secrets**: API keys managed through Streamlit Cloud dashboard
 
 ### Local Development
 ```bash
@@ -207,9 +231,11 @@ streamlit run app.py --server.headless true
 
 ## 🔒 Security & Privacy
 
-- **API Keys**: Stored in session state, not persisted
+- **API Keys**: Securely stored using Streamlit secrets (production) or environment variables (development)
+- **No Hardcoded Secrets**: All sensitive data is externalized
 - **Data**: All sample data is generated locally
 - **No External Storage**: No data is sent to external services except OpenAI API
+- **Environment Separation**: Different secret handling for dev vs production
 
 ## 🤝 Contributing
 
@@ -218,6 +244,7 @@ This is a demo application for RelationalAI PM interviews. For modifications:
 2. Maintain clean separation of concerns
 3. Add appropriate error handling
 4. Update documentation as needed
+5. Follow security best practices for API keys
 
 ## 📄 License
 

@@ -75,19 +75,35 @@ def main():
         
         st.divider()
         
-        # API Key configuration
+        # API Key configuration info
         st.subheader("🔑 API Configuration")
-        api_key = st.text_input(
-            "OpenAI API Key",
-            type="password",
-            help="Enter your OpenAI API key for LLM features"
-        )
+        st.markdown("""
+        **For Production (Streamlit Cloud):**
+        - Add API key in Streamlit Cloud dashboard under "Secrets"
+        - Format: `{"openai_api_key": "your-api-key-here"}`
         
-        if api_key:
-            os.environ["OPENAI_API_KEY"] = api_key
-            st.success("✅ API key configured")
-        else:
-            st.warning("⚠️ API key required for LLM features")
+        **For Local Development:**
+        - Set environment variable: `export OPENAI_API_KEY="your-api-key-here"`
+        - Or add to `.streamlit/secrets.toml`: `openai_api_key = "your-api-key-here"`
+        """)
+        
+        # Check if API key is available
+        try:
+            api_key = st.secrets.get("openai_api_key")
+            if api_key:
+                st.success("✅ API key configured (Streamlit secrets)")
+            else:
+                api_key = os.getenv("OPENAI_API_KEY")
+                if api_key:
+                    st.success("✅ API key configured (environment variable)")
+                else:
+                    st.warning("⚠️ API key not found")
+        except:
+            api_key = os.getenv("OPENAI_API_KEY")
+            if api_key:
+                st.success("✅ API key configured (environment variable)")
+            else:
+                st.warning("⚠️ API key not found")
     
     # Main content area with tabs
     tab1, tab2, tab3, tab4 = st.tabs([

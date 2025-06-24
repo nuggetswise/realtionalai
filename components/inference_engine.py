@@ -6,7 +6,15 @@ import openai
 
 class InferenceEngine:
     def __init__(self):
-        self.api_key = os.getenv("OPENAI_API_KEY")
+        # Try to get API key from Streamlit secrets first (production), then environment variable (development)
+        self.api_key = None
+        try:
+            # Production: Get from Streamlit secrets
+            self.api_key = st.secrets.get("openai_api_key")
+        except:
+            # Development: Get from environment variable
+            self.api_key = os.getenv("OPENAI_API_KEY")
+        
         self.client = None
         if self.api_key:
             try:
@@ -17,7 +25,7 @@ class InferenceEngine:
     def generate_insights(self, schema: Dict[str, Any], query: str, results: Any) -> str:
         """Generate insights using OpenAI API."""
         if not self.client:
-            return "⚠️ OpenAI API key not configured. Please add your API key in the sidebar."
+            return "⚠️ OpenAI API key not configured. Please add your API key in Streamlit secrets or environment variables."
         
         try:
             # Prepare context for the LLM
@@ -208,7 +216,16 @@ For each recommendation, include:
             return
         
         if not self.api_key:
-            st.warning("⚠️ Please configure your OpenAI API key in the sidebar for LLM features.")
+            st.warning("⚠️ OpenAI API key not configured. Please add your API key in Streamlit secrets or environment variables.")
+            st.info("""
+            **For Production (Streamlit Cloud):**
+            - Add API key in Streamlit Cloud dashboard under "Secrets"
+            - Format: `{"openai_api_key": "your-api-key-here"}`
+            
+            **For Local Development:**
+            - Set environment variable: `export OPENAI_API_KEY="your-api-key-here"`
+            - Or add to `.streamlit/secrets.toml`: `openai_api_key = "your-api-key-here"`
+            """)
             return
         
         # Get current data
