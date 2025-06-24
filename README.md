@@ -10,6 +10,12 @@ This demo app showcases:
 - **Semantic Inference Engine**: AI-powered insights generation
 - **PM Strategy Helper**: Product roadmap suggestions and strategic analysis
 
+## 🚀 Live Demo
+
+**🌐 Live App**: [GraphOps Playground on Streamlit Cloud](https://graphops-playground.streamlit.app)
+
+**📁 Repository**: [https://github.com/nuggetswise/realtionalai](https://github.com/nuggetswise/realtionalai)
+
 ## 🚀 Features
 
 ### 1. 🏗️ Graph Schema Builder
@@ -46,7 +52,7 @@ This demo app showcases:
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/nuggetswise/realtionalai.git
    cd relationalai
    ```
 
@@ -61,7 +67,14 @@ This demo app showcases:
 
 4. **Run the application**
    ```bash
+   # Quick start
+   ./start.sh
+   
+   # Or directly
    streamlit run app.py
+   
+   # Demo mode (no API required)
+   streamlit run demo.py
    ```
 
 ## 📁 Project Structure
@@ -71,6 +84,9 @@ graphops_playground/
 ├── app.py                          # Main Streamlit application
 ├── requirements.txt                # Python dependencies
 ├── README.md                       # This file
+├── start.sh                        # Quick start script
+├── demo.py                         # Demo mode without API
+├── .github/workflows/              # CI/CD deployment
 └── components/                     # Modular components
     ├── __init__.py
     ├── schema_builder.py          # Graph schema definition & visualization
@@ -135,6 +151,23 @@ graphops_playground/
 - **Error Handling**: Graceful degradation when API unavailable
 - **Responsive UI**: Clean, professional interface
 
+## 🚀 Deployment
+
+### Streamlit Cloud
+The app is automatically deployed to Streamlit Cloud via GitHub Actions:
+- **Live URL**: [https://graphops-playground.streamlit.app](https://graphops-playground.streamlit.app)
+- **Auto-deploy**: Pushes to main branch trigger deployment
+- **CI/CD**: Automated testing and deployment pipeline
+
+### Local Development
+```bash
+# Development mode
+streamlit run app.py --server.port 8502
+
+# Production mode
+streamlit run app.py --server.headless true
+```
+
 ## 🎯 Demo Scenarios
 
 ### For RelationalAI PM Interview
@@ -192,4 +225,6 @@ This project is created for demonstration purposes for RelationalAI PM interview
 
 ---
 
-**Built with ❤️ for RelationalAI Product Manager, Platform role demonstration** 
+**Built with ❤️ for RelationalAI Product Manager, Platform role demonstration**
+
+**Repository**: [https://github.com/nuggetswise/realtionalai](https://github.com/nuggetswise/realtionalai) 
